@@ -1,6 +1,6 @@
 
 import { Application} from "pixi.js";
-import { cardContainer, generateCards } from "./generate-card";
+import { Card } from "./generate-card";
 
 (async () => {
     const app = new Application();
@@ -15,9 +15,18 @@ import { cardContainer, generateCards } from "./generate-card";
     document.body.appendChild(app.canvas);
 
     //generate cards
-    generateCards(2);
-    cardContainer.position.set(app.screen.width / 2, app.screen.height / 2); 
+    // generateCards(2);
+    // cardContainer.position.set; 
+    // ;
+    // app.stage.addChild(cardContainer);
+    
+    const card = new Card();
+    const cardContainer = card.getCardContainer();
+    card.generateCards(3);
+    cardContainer.position.set(app.screen.width / 2, app.screen.height / 2);
     cardContainer.pivot.set(cardContainer.width / 2, cardContainer.height /2);
+
     app.stage.addChild(cardContainer);
+    
     
 })();

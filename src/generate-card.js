@@ -6,26 +6,39 @@
 
 import { Graphics, Container } from "pixi.js"
 
-export const cardContainer = new Container();
 
-
-export function generateCards(gridSize){
-    const padding = 10;
-
-    for (let i=0; i < gridSize * gridSize; i++){
-        const card = new Graphics()
-        .rect(0,0,100,150)
-        .fill('E5E5E5');
-
-        let row = Math.floor(i / gridSize);
-        let column = (i % gridSize)
-        console.log(`Index: ${i}, row: ${row}, col: ${column}`)
-
-        card.x = column * (card.width + padding);
-        card.y = row * (card.height + padding);
-        console.log(`Card x: ${card.x}, card y: ${card.y}`);
-
-        cardContainer.addChild(card);
+export class Card{
+    constructor(){
+        this.cardContainer = new Container();
     }
 
+    generateCards(gridSize){
+        const padding = 10;
+    
+        for (let i=0; i < gridSize * gridSize; i++){
+            const card = new Graphics()
+            .rect(0,0,100,150)
+            .fill('E5E5E5');
+            card.eventMode = true;
+            card.cursor = 'pointer';
+    
+    
+            let row = Math.floor(i / gridSize);
+            let column = (i % gridSize)
+            console.log(`Index: ${i}, row: ${row}, col: ${column}`)
+    
+            card.x = column * (card.width + padding);
+            card.y = row * (card.height + padding);
+            console.log(`Card x: ${card.x}, card y: ${card.y}`);
+            
+    
+            this.cardContainer.addChild(card);
+        }
     }
+
+    getCardContainer(){
+        return this.cardContainer;
+    }
+    
+
+}
