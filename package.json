@@ -1,0 +1,26 @@
+{
+  "name": "hardin-ng-alaala",
+  "version": "1.0.0",
+  "description": "Hardin ng Alaala or Garden of memories, is a memory card game that I'm making using PIXI.JS library in JS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TransparentGlass/Hardin-ng-Alaala.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TransparentGlass/Hardin-ng-Alaala/issues"
+  },
+  "homepage": "https://github.com/TransparentGlass/Hardin-ng-Alaala#readme",
+  "devDependencies": {
+    "vite": "^6.0.11"
+  },
+  "dependencies": {
+    "pixi.js": "^8.7.3"
+  }
+}
