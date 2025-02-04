@@ -40,5 +40,7 @@ export class Card{
         return this.cardContainer;
     }
     
+    //TODO: place individual cards into a list with their states.
+    //TODO: change state(for now color) if card is clicked
 
 }
