@@ -16,6 +16,11 @@ export class Card{
 
     generateCards(gridSize){
         const padding = 10;
+
+        if (gridSize % 3 == 0){
+            console.log("grid size must be an even number.")
+            return;
+        }
         
         
         for (let i=0; i < gridSize * gridSize; i++){
@@ -44,7 +49,7 @@ export class Card{
         return this.cardContainer;
     }
     
-    //TODO: place individual cards into a list with their states.
+
     flipCard(card, index){
         if (this.cards[index].flipped){
             console.log(`the card ${index} is already flipped`)
@@ -58,9 +63,9 @@ export class Card{
 
         card.clear();
         card.rect(0,0,100,150)
-        card.fill('ba0012')
+        card.fill('ba0012') //red
+
         this.flippedCard.push({card, index});
-        console.log(this.flippedCard)
         
         if (this.flippedCard.length == 2){
             setTimeout(() => {
@@ -73,18 +78,21 @@ export class Card{
                     this.cards[this.flippedCard[i].index].flipped = false;
                     currentCard.clear()
                     .rect(0,0,100,150)
-                    .fill('E5E5E5');
+                    .fill('E5E5E5'); //back to white
 
     
                 }
                 this.flippedCard = [];
-            }, 1000)
+            }, 500)
             
         }
     }
 
     
 
-    //TODO: change state(for now color) if card is clicked
+    //TODO: make match algorithm for the cards
+    matchCard(){    
+
+    }
 
 }

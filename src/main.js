@@ -16,7 +16,7 @@ import { Card } from "./card";
 
     
     const card = new Card();
-    card.generateCards(3);
+    card.generateCards(4);
     const cardContainer = card.getCardContainer();
     cardContainer.pivot.set(cardContainer.width/2, cardContainer.height/2);
     cardContainer.position.set(app.screen.width / 2, app.screen.height / 2);
