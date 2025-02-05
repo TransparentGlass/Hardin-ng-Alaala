@@ -4,7 +4,7 @@
     to find the row, use iteration / gridSize but you have to round down using math.floor
 */
 
-import { Graphics, Container, setPositions } from "pixi.js"
+import { Graphics, Container } from "pixi.js"
 
 
 export class Card{
@@ -93,12 +93,10 @@ export class Card{
             card1.flipped= false;
             card2.flipped = false;
 
-            console.log('changing card1 color back to white')
             this.flippedCard[0].card.clear()
                 .rect(0,0,100,150)
                 .fill('E5E5E5'); //back to white
             
-            console.log('changing 2 as well')
             this.flippedCard[1].card.clear()
             .rect(0,0,100,150)
             .fill('E5E5E5'); //back to white
