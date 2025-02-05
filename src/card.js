@@ -4,7 +4,7 @@
     to find the row, use iteration / gridSize but you have to round down using math.floor
 */
 
-import { Graphics, Container } from "pixi.js"
+import { Graphics, Container, setPositions } from "pixi.js"
 
 
 export class Card{
@@ -22,14 +22,13 @@ export class Card{
             return;
         }
         
-        
         for (let i=0; i < gridSize * gridSize; i++){
             const card = new Graphics()
             .rect(0,0,100,150)
             .fill('E5E5E5');
             card.eventMode = 'static';
             card.cursor = 'pointer';
-    
+            
     
             let row = Math.floor(i / gridSize);
             let column = (i % gridSize)
@@ -39,17 +38,16 @@ export class Card{
             card.on('pointerdown', () => this.flipCard(card, i));
             
             this.cards.push({sprite: card, value: i % (gridSize*gridSize /2), flipped: false})
-            
+
             this.cardContainer.addChild(card);
         }
-        console.log(this.cards);
+        
     }
 
     getCardContainer(){
         return this.cardContainer;
     }
     
-
     flipCard(card, index){
         if (this.cards[index].flipped){
             console.log(`the card ${index} is already flipped`)
@@ -59,12 +57,13 @@ export class Card{
             return;
         }
 
-        console.log(`this card ${index} is flipped`);
+        console.log(`this card ${index} is flipped value of ${this.cards[index].value}`);
+        
         this.cards[index].flipped = true;
 
-        card.clear();
-        card.rect(0,0,100,150)
-        card.fill('ba0012') //red
+        card.clear()
+        .rect(0,0,100,150)
+        .fill('ba0012') //red
 
         this.flippedCard.push({card, index});
         
@@ -76,44 +75,52 @@ export class Card{
         }
     }
 
-    
-
-    //TODO: make match algorithm for the cards
     matchCard(){ 
         //matched values
         const card1 = this.cards[this.flippedCard[0].index]
         const card2 = this.cards[this.flippedCard[1].index]
-
-        if(card1.value == card2.value){
+        
+        if(card1.value == card2.value || card2.value == card1.value){
             console.log(`\n match!`)
-            card1.sprite.eventMode = 'passive';
-            card2.sprite.eventMode = 'passive';
+            this.flippedCard[0].card.eventMode = 'passive';
+            this.flippedCard[1].card.eventMode = 'passive';
             this.flippedCard = [];
             
 
         }else{
             console.log('\ntry again')
-            console.log(`Card 1: ${card1.value}, Card 2: ${card2.value}`)
 
             card1.flipped= false;
             card2.flipped = false;
 
-            card1.sprite.clear()
+            console.log('changing card1 color back to white')
+            this.flippedCard[0].card.clear()
                 .rect(0,0,100,150)
                 .fill('E5E5E5'); //back to white
-
-            card2.sprite.clear()
+            
+            console.log('changing 2 as well')
+            this.flippedCard[1].card.clear()
             .rect(0,0,100,150)
             .fill('E5E5E5'); //back to white
+            
             this.flippedCard = [];
             
             
 
 
         }
-
-
         
+    }
+
+    shuffle(){
+        const array = this.cards;
+        console.log('shuffle is running ')
+        for (let i = array.length - 1; i > 0 ; i--){
+            let j = Math.floor(Math.random() * (i + 1))
+            
+            let temporaryArray = array[i]; array[i] = array[j]; array[j] = temporaryArray;
+            
+        }
     }
 
 }
