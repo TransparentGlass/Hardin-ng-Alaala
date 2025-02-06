@@ -12,7 +12,7 @@ export class Card{
         this.cardContainer = new Container();
         this.cards = [];
         this.flippedCard = [];
-        this.colors= ['b067f5', '8aff9a', 'ff9aee', '8afff5', '5a5255', '559e83', 'ae5a41', 'c3cb71']
+        this.cardColor= ['b067f5', '8aff9a', 'ff9aee', '8afff5', '5a5255', '559e83', 'ae5a41', 'c3cb71']
     }
 
     generateCards(gridSize){
@@ -24,7 +24,6 @@ export class Card{
         }
         
         for (let i=0; i < gridSize * gridSize; i++){
-
             
             const card = new Graphics()
             .rect(0,0,100,150)
@@ -36,9 +35,6 @@ export class Card{
             let row = Math.floor(i / gridSize);
             let column = (i % gridSize)
             
-
-            
-    
             card.x = column * (card.width + padding);
             card.y = row * (card.height + padding);
             card.on('pointerdown', () => this.flipCard(card, i));
@@ -53,7 +49,6 @@ export class Card{
     }
 
    
-    
     flipCard(card, deckIndex){
         if (this.cards[deckIndex].flipped){
             console.log(`the card ${deckIndex} is already flipped`)
@@ -72,9 +67,7 @@ export class Card{
         
         if (this.flippedCard.length == 2){
             console.log('checking...')
-            setTimeout(() =>{this.matchCard()}, 1000)
-            
-            
+            setTimeout(() =>{this.matchCard()}, 1000) 
         }
     }
 
@@ -101,9 +94,6 @@ export class Card{
             
             this.flippedCard = [];
             
-            
-
-
         }
         
     }
@@ -128,7 +118,7 @@ export class Card{
     cardFlipFront(card, deckIndex){
         card.clear()
         .rect(0,0,100,150)
-        .fill(this.colors[this.cards[deckIndex].value])
+        .fill(this.cardColor[this.cards[deckIndex].value])
     }
 
     getCardContainer(){
