@@ -5,7 +5,7 @@ import { Card } from "./card";
 (async () => {
     const app = new Application();
     await app.init({
-        background:'#1E90FF',
+        background:'37474f',
         resizeTo: window
     })
     app.canvas.style.position = 'absolute';
