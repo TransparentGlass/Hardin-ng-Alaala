@@ -12,6 +12,7 @@ export class Card{
         this.cardContainer = new Container();
         this.cards = [];
         this.flippedCard = [];
+        this.colors= ['b067f5', '8aff9a', 'ff9aee', '8afff5', '5a5255', '559e83', 'ae5a41', 'c3cb71']
     }
 
     generateCards(gridSize){
@@ -23,49 +24,51 @@ export class Card{
         }
         
         for (let i=0; i < gridSize * gridSize; i++){
+
+            
             const card = new Graphics()
             .rect(0,0,100,150)
             .fill('E5E5E5');
             card.eventMode = 'static';
             card.cursor = 'pointer';
             
-    
+            let cardValue = i % (gridSize*gridSize /2)
             let row = Math.floor(i / gridSize);
             let column = (i % gridSize)
+            
+
+            
     
             card.x = column * (card.width + padding);
             card.y = row * (card.height + padding);
             card.on('pointerdown', () => this.flipCard(card, i));
             
-            this.cards.push({sprite: card, value: i % (gridSize*gridSize /2), flipped: false})
+            this.cards.push({sprite: card, value: cardValue, flipped: false})
 
             this.cardContainer.addChild(card);
         }
+
+        this.shuffle();
         
     }
 
-    getCardContainer(){
-        return this.cardContainer;
-    }
+   
     
-    flipCard(card, index){
-        if (this.cards[index].flipped){
-            console.log(`the card ${index} is already flipped`)
+    flipCard(card, deckIndex){
+        if (this.cards[deckIndex].flipped){
+            console.log(`the card ${deckIndex} is already flipped`)
             return;
         } else if (this.flippedCard.length == 2){
             console.log(`the 2 cards has been flipped`)
             return;
         }
 
-        console.log(`this card ${index} is flipped value of ${this.cards[index].value}`);
+        console.log(`this card ${deckIndex} is flipped value of ${this.cards[deckIndex].value}`);
         
-        this.cards[index].flipped = true;
+        this.cards[deckIndex].flipped = true;
+        this.cardFlipFront(card, deckIndex)
 
-        card.clear()
-        .rect(0,0,100,150)
-        .fill('ba0012') //red
-
-        this.flippedCard.push({card, index});
+        this.flippedCard.push({card, deckIndex});
         
         if (this.flippedCard.length == 2){
             console.log('checking...')
@@ -77,8 +80,8 @@ export class Card{
 
     matchCard(){ 
         //matched values
-        const card1 = this.cards[this.flippedCard[0].index]
-        const card2 = this.cards[this.flippedCard[1].index]
+        const card1 = this.cards[this.flippedCard[0].deckIndex]
+        const card2 = this.cards[this.flippedCard[1].deckIndex]
         
         if(card1.value == card2.value || card2.value == card1.value){
             console.log(`\n match!`)
@@ -91,15 +94,10 @@ export class Card{
             console.log('\ntry again')
 
             card1.flipped= false;
-            card2.flipped = false;
+            card2.flipped = false;   
 
-            this.flippedCard[0].card.clear()
-                .rect(0,0,100,150)
-                .fill('E5E5E5'); //back to white
-            
-            this.flippedCard[1].card.clear()
-            .rect(0,0,100,150)
-            .fill('E5E5E5'); //back to white
+            this.cardFlipBack(this.flippedCard[0].card)
+            this.cardFlipBack(this.flippedCard[1].card)
             
             this.flippedCard = [];
             
@@ -121,4 +119,19 @@ export class Card{
         }
     }
 
+    cardFlipBack(card){
+        card.clear()
+        .rect(0,0,100,150)
+        .fill('E5E5E5'); 
+    }
+
+    cardFlipFront(card, deckIndex){
+        card.clear()
+        .rect(0,0,100,150)
+        .fill(this.colors[this.cards[deckIndex].value])
+    }
+
+    getCardContainer(){
+        return this.cardContainer;
+    }
 }
